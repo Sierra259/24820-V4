@@ -26,11 +26,6 @@ public class LearningTeleOp extends LinearOpMode{
         robot.BLD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         robot.BRD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-
-        robot.DOWN.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        robot.UP.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         telemetry.setMsTransmissionInterval(50);
 
         waitForStart();
@@ -95,6 +90,7 @@ public class LearningTeleOp extends LinearOpMode{
 
         boolean y;
 
+        boolean isPosBBC = false;
 
         while (opModeIsActive()) {
 
@@ -162,7 +158,37 @@ public class LearningTeleOp extends LinearOpMode{
             //all claw code
             waitForStart();
 
+            double FLDp = lefty + leftx;
+            double FRDp = righty - rightx;
+            double BLDp = lefty - leftx;
+            double BRDp = righty + rightx;
+
+            // Gamepad 1
+            if (isPosBBC) {
+                if ((FLDp > 0 && BRDp > 0 && FRDp < 0 && BLDp < 0) || FLDp < 0 && BRDp < 0 && FRDp > 0 && BLDp > 0)
+                {
+                    robot.FLD.setPower(speed * FLDp);
+
+                    robot.FRD.setPower(speed * FRDp);
+
+                    robot.BLD.setPower(speed * BLDp);
+
+                    robot.BRD.setPower(speed * BRDp);
+                }
+            }
+            else {
+                robot.FLD.setPower(speed * FLDp);
+
+                robot.FRD.setPower(speed * FRDp);
+
+                robot.BLD.setPower(speed * BLDp);
+
+                robot.BRD.setPower(speed * BRDp);
+            }
+
         }
+
+
     }
 
 }

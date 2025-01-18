@@ -23,9 +23,6 @@ public class HardwarePushBot17 {
     public Servo Claw = null;
     public Servo ClawTwist = null;
 
-    public DcMotorEx DOWN = null; //vertical intake down
-    public DcMotorEx UP = null; //vertical intake up
-
     HardwareMap hardwareMap = null;
 
 
@@ -35,8 +32,6 @@ public class HardwarePushBot17 {
         FRD = hardwareMap.get(DcMotorEx.class, "FRD");
         BLD = hardwareMap.get(DcMotorEx.class, "BLD");
         BRD = hardwareMap.get(DcMotorEx.class, "BRD");
-        UP = hardwareMap.get(DcMotorEx.class, "UP");
-        DOWN = hardwareMap.get(DcMotorEx.class, "DOWN");
 
         FLPulley = hardwareMap.get(DcMotorEx.class, "FLPulley");
         BLPulley = hardwareMap.get(DcMotorEx.class, "BLPulley");
@@ -56,9 +51,6 @@ public class HardwarePushBot17 {
         FRD.setDirection(DcMotorEx.Direction.FORWARD);
         BLD.setDirection(DcMotorEx.Direction.REVERSE);
         BRD.setDirection(DcMotorEx.Direction.FORWARD);
-
-        UP.setDirection(DcMotorEx.Direction.REVERSE);
-        DOWN.setDirection(DcMotorEx.Direction.REVERSE);
 
         FLD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         FRD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
