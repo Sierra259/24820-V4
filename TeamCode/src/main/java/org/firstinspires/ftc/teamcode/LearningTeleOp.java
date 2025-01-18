@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="Training")
 public class LearningTeleOp extends LinearOpMode{
@@ -38,18 +36,21 @@ public class LearningTeleOp extends LinearOpMode{
 
         double speed = 0.5;
 
-        double lefty;
+        double lefty_1;
 
-        double righty;
+        double righty_1;
 
-        double leftx;
+        double leftx_1;
 
-        double rightx;
+        double rightx_1;
 
-        double rightj; //right joystick
+        double righty_2; //right joystick
 
-        double leftj; //left joystick
+        double lefty_2; //left joystick
 
+        double rightx_2;
+
+        double leftx_2;
 
         boolean buttonL;
 
@@ -96,19 +97,23 @@ public class LearningTeleOp extends LinearOpMode{
 
             //Gamepad 1
 
-            lefty = -gamepad1.left_stick_y;
+            lefty_1 = -gamepad1.left_stick_y;
 
-            righty = -gamepad1.right_stick_y;
+            righty_1 = -gamepad1.right_stick_y;
 
-            leftx = gamepad1.left_stick_x;
+            leftx_1 = gamepad1.left_stick_x;
 
-            rightx = gamepad1.right_stick_x;
+            rightx_1 = gamepad1.right_stick_x;
 
             //Gamepad 2
 
-            leftj = gamepad2.left_stick_y;
+            lefty_2 = gamepad2.left_stick_y;
 
-            rightj = gamepad2.right_stick_y;
+            leftx_2 = -gamepad2.left_stick_y;
+
+            righty_2 = gamepad2.right_stick_y;
+
+            rightx_2 = -gamepad2.right_stick_y;
 
             buttonL = gamepad2.left_bumper;
 
@@ -158,10 +163,10 @@ public class LearningTeleOp extends LinearOpMode{
             //all claw code
             waitForStart();
 
-            double FLDp = lefty + leftx;
-            double FRDp = righty - rightx;
-            double BLDp = lefty - leftx;
-            double BRDp = righty + rightx;
+            double FLDp = lefty_1 + leftx_1;
+            double FRDp = righty_1 - rightx_1;
+            double BLDp = lefty_1 - leftx_1;
+            double BRDp = righty_1 + rightx_1;
 
             // Gamepad 1
             if (isPosBBC) {
@@ -184,6 +189,34 @@ public class LearningTeleOp extends LinearOpMode{
                 robot.BLD.setPower(speed * BLDp);
 
                 robot.BRD.setPower(speed * BRDp);
+            }
+
+            double FLPulleyp = lefty_2 + leftx_2;
+            double FRPulleyp = righty_2 - rightx_2;
+            double BLPulleyp = lefty_2 - leftx_2;
+            double BRPulleyp = righty_2 + rightx_2;
+
+            // Gamepad 2
+            if (isPosBBC) {
+                if ((FLPulleyp > 0 && BRPulleyp > 0 && FRPulleyp < 0 && BLPulleyp < 0) || FLPulleyp < 0 && BRPulleyp < 0 && FRPulleyp > 0 && BLPulleyp > 0)
+                {
+                    robot.FLPulley.setPower(speed * FLPulleyp);
+
+                    robot.FRPulley.setPower(speed * FRPulleyp);
+
+                    robot.BLPulley.setPower(speed * BLPulleyp);
+
+                    robot.BRPulley.setPower(speed * BRPulleyp);
+                }
+            }
+            else {
+                robot.FLPulley.setPower(speed * FLPulleyp);
+
+                robot.FRPulley.setPower(speed * FRPulleyp);
+
+                robot.BLPulley.setPower(speed * BLPulleyp);
+
+                robot.BRPulley.setPower(speed * BRPulleyp);
             }
 
         }
