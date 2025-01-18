@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-@TeleOp(name="Training")
+@TeleOp(name="TeleOp")
 public class LearningTeleOp extends LinearOpMode{
     // Class Gamepad Documentation:
 
