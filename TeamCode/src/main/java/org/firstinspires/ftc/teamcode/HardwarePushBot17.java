@@ -1,10 +1,13 @@
 //If we ever get stuck, consult Leonard and Shayan's code - Phi
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+
+
 
 
 public class HardwarePushBot17 {
@@ -13,16 +16,19 @@ public class HardwarePushBot17 {
     public DcMotorEx BLD = null;
     public DcMotorEx BRD = null;
 
+
     public DcMotorEx Up = null;
     public DcMotorEx Down = null;
     public DcMotorEx PivotR = null;
     public DcMotorEx PivotL = null;
+
 
     public Servo LPiv = null;
     public Servo RPiv = null;
     public Servo Twist = null;
     public Servo Claw = null;
     HardwareMap hardwareMap = null;
+
 
     public void init(HardwareMap cMap) {
         hardwareMap = cMap;
@@ -33,13 +39,16 @@ public class HardwarePushBot17 {
         Up = hardwareMap.get(DcMotorEx.class, "Up");
         Down = hardwareMap.get(DcMotorEx.class, "Down");
 
+
         PivotL = hardwareMap.get(DcMotorEx.class, "PivotL");
         PivotR = hardwareMap.get(DcMotorEx.class, "PivotR");
+
 
         LPiv = hardwareMap.get(Servo.class, "LPiv");
         RPiv = hardwareMap.get(Servo.class, "RPiv");
         Twist = hardwareMap.get(Servo.class, "Twist");
         Claw = hardwareMap.get(Servo.class, "Claw");
+
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -49,18 +58,27 @@ public class HardwarePushBot17 {
         BLD.setDirection(DcMotorEx.Direction.FORWARD);
         BRD.setDirection(DcMotorEx.Direction.FORWARD);
 
+
         //arm pivot
-//        PivotR.setDirection(DcMotorEx.Direction.REVERSE);
+        PivotR.setDirection(DcMotorEx.Direction.FORWARD);
+        PivotL.setDirection(DcMotorEx.Direction.REVERSE);
+
+
+
+
+
 
         FLD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         FRD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         BLD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         BRD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+
         PivotL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         PivotR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         Up.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         Down.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
 
         Up.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
         Down.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
