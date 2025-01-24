@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 
-@TeleOp(name="PushBotTeleOp")
-public class PushBotTeleOp extends LinearOpMode{
+@TeleOp(name="PushBotTeleOpTwoDriv")
+public class PushBotTeleOpTwoDriv extends LinearOpMode{
     // Class Gamepad Documentation:
 
 
@@ -244,37 +244,37 @@ public class PushBotTeleOp extends LinearOpMode{
 
 
 
-//            if(gamepad1.a)
-//
-//            {
-//
-//                speed = 0.9;
-//
-//            }
-//
-//            else if(gamepad1.b)
-//
-//            {
-//
-//                speed = 0.75;
-//
-//            }
-//
-//            else if(gamepad1.x)
-//
-//            {
-//
-//                speed = 0.5;
-//
-//            }
-//
-//            else if(gamepad1.y)
-//
-//            {
-//
-//                speed = 0.5;
-//
-//            }
+            if(gamepad1.a)
+
+            {
+
+                speed = 0.9;
+
+            }
+
+            else if(gamepad1.b)
+
+            {
+
+                speed = 0.75;
+
+            }
+
+            else if(gamepad1.x)
+
+            {
+
+                speed = 0.8;
+
+            }
+
+            else if(gamepad1.y)
+
+            {
+
+                speed = 0.5;
+
+            }
 
 
 //            if(gamepad2.a{}){
@@ -316,14 +316,22 @@ public class PushBotTeleOp extends LinearOpMode{
 
                 robot.BRD.setPower(speed * BRDp);
             }
-//            if(leftj!=0){
-//                robot.Down.setPower(.5 * leftj);
-//                robot.Up.setPower(.5 * -leftj);
-//            }
-//            else{
-//                robot.Down.setPower(0);
-//                robot.Up.setPower(0);
-//            }
+            if(leftj!=0){
+                robot.Down.setPower(.9 * leftj);
+                robot.Up.setPower(.9 * -leftj);
+            }
+            else if(gamepad2.left_bumper){
+                robot.Down.setPower(.5);
+                robot.Up.setPower(-.5);
+            }
+            else if(gamepad2.left_trigger>0){
+                robot.Down.setPower(-.5);
+                robot.Up.setPower(.5);
+            }
+            else{
+                robot.Down.setPower(0);
+                robot.Up.setPower(0);
+            }
 
             //Soft-Stop for Pivot
             if (robot.PivotL.getCurrentPosition() < 0 || robot.PivotR.getCurrentPosition() < 0){
@@ -331,8 +339,8 @@ public class PushBotTeleOp extends LinearOpMode{
                 robot.PivotR.setPower(1);
             }
             else if(rightj!=0){
-                robot.PivotL.setPower(.8 * rightj);
-                robot.PivotR.setPower(.8 * rightj);
+                robot.PivotL.setPower(.9 * rightj);
+                robot.PivotR.setPower(.9 * rightj);
             }
             else{
                 robot.PivotL.setPower(0);
@@ -340,30 +348,33 @@ public class PushBotTeleOp extends LinearOpMode{
             }
 
 
-            if(gamepad1.a){ // gamepad2test
+            if(gamepad2.a){ // gamepad2test
                 robot.RPiv.setPosition(1);
 //                robot.LPiv.setPosition(1);
 
 
             }
-            if(gamepad1.right_trigger>0){ // gamepad2test
+            if(gamepad2.right_trigger>0){ // gamepad2test
                 robot.Claw.setPosition(0.4);
             }
             else{
                 robot.Claw.setPosition(0.7);
             }
-            if(gamepad1.b) { // gamepad2test
+            if(gamepad2.b) { // gamepad2test
                 robot.RPiv.setPosition(.7);
 //                robot.LPiv.setPosition(.55);
             }
-            if(gamepad1.dpad_down){
+            if(gamepad2.dpad_down){
                 robot.Twist.setPosition(0.35);
             }
-            if(gamepad1.dpad_left){
+            if(gamepad2.dpad_left){
                 robot.Twist.setPosition(0.45);
             }
-            if(gamepad1.dpad_right){
+            if(gamepad2.dpad_right){
                 robot.Twist.setPosition(0.25);
+            }
+            if(gamepad2.dpad_up){
+                robot.Twist.setPosition(0.85);
             }
 //            if(gamepad1.y){ //!!! Dont run encoder missing
 //                robot.PivotL.setTargetPosition(-100);
@@ -388,37 +399,12 @@ public class PushBotTeleOp extends LinearOpMode{
 
 
 
-            if(gamepad1.left_bumper){
-                robot.Down.setPower(.5);
-                robot.Up.setPower(-.5);
-            }
-            else if(gamepad1.left_trigger>0){
-                robot.Down.setPower(-.5);
-                robot.Up.setPower(.5);
-            }
-            else{
-                robot.Down.setPower(0);
-                robot.Up.setPower(0);
-            }
+
 
 
             // Gamepad 2
 
 
-//            if (liftPosition + armSpeed*armPower >= 0) {
-//
-//                liftPosition += armPower*armSpeed;
-//
-//                robot.LL.setPower(armSpeed*armPower);
-//
-//                robot.RL.setPower(armSpeed*armPower);
-//
-//            }
-
-
-//            robot.IN.setPower(intakeSpeed*intakeSpeedMultiplier);
-//            robot.LL.setPower(armSpeed*armPower);
-//            robot.RL.setPower(armSpeed*armPower);
             telemetry.update();
 
 
