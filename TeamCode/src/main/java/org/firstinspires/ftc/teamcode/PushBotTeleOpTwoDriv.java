@@ -339,33 +339,47 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
 //                robot.Up.setPower(0);
 //            }
 
+
+            // || robot.PivotR.getCurrentPosition() > 40
+            // || robot.PivotR.getCurrentPosition() > 320
             //Soft-Stop for Pivot
-            if (robot.PivotL.getCurrentPosition() < 0 || robot.PivotR.getCurrentPosition() > 0){
-                robot.PivotL.setPower(0.2);
+            //
+            if (robot.PivotL.getCurrentPosition() < -40){
+                robot.PivotL.setPower(
+                        0.2);
                 robot.PivotR.setPower(0.2);
             }
-            else if(robot.PivotL.getCurrentPosition() < -300 || robot.PivotR.getCurrentPosition() > 300){
+            else if(robot.PivotL.getCurrentPosition() < -320){
                 robot.PivotL.setPower(0.5);
                 robot.PivotR.setPower(0.5);
             }
-            else if (robot.Down.getCurrentPosition() > -1300) {
+            else if (robot.Down.getCurrentPosition() > -1000) {
 
                 if(leftj!=0){
-                    robot.PivotL.setPower(.8 * leftj);
-                    robot.PivotR.setPower(.8 * leftj);
+                    if(leftj<0) {
+                        robot.PivotL.setPower(.8 * leftj);
+                        robot.PivotR.setPower(.8 * leftj);
+                    }
+                    else{
+                        if(robot.PivotL.getCurrentPosition() > 550){
+
+                            robot.PivotL.setPower(.1 * leftj);
+                            robot.PivotR.setPower(.1 * leftj);
+                        }
+                        else{
+                            robot.PivotL.setPower(.4 * leftj);
+                            robot.PivotR.setPower(.4 * leftj);
+                        }
+                    }
                 }
                 else{
                     robot.PivotL.setPower(0);
                     robot.PivotR.setPower(0);
                 }
             }
-            else if (robot.PivotL.getCurrentPosition() > 30){
+            else if (robot.PivotL.getCurrentPosition() > 15){
                 robot.PivotL.setPower(-0.2);
                 robot.PivotR.setPower(-0.2);
-            }
-            else if(leftj!=0){
-                robot.PivotL.setPower(.5 * leftj);
-                robot.PivotR.setPower(.5 * leftj);
             }
             else{
                 robot.PivotL.setPower(0);
@@ -406,10 +420,10 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                 robot.Twist.setPosition(0.35);
             }
             if(gamepad2.dpad_left){
-                robot.Twist.setPosition(0.45);
+                robot.Twist.setPosition(0.55);
             }
             if(gamepad2.dpad_right){
-                robot.Twist.setPosition(0.25);
+                robot.Twist.setPosition(0.15);
             }
             if(gamepad2.dpad_down  || gamepad2.left_bumper){
                 robot.Twist.setPosition(0.75);
@@ -449,8 +463,8 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                 }
                 else if (robot.Down.getCurrentPosition() > -50){
                     if (rightj < 0) {
-                        robot.Down.setPower(1 * rightj);
-                        robot.Up.setPower(-1 * rightj);
+                        robot.Down.setPower(.8 * rightj);
+                        robot.Up.setPower(-.8 * rightj);
                     }
                     else{
                         robot.Down.setPower(0);
@@ -459,8 +473,8 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                 }
                 else if (robot.Down.getCurrentPosition() < -2650){
                     if (rightj > 0) {
-                        robot.Down.setPower(1 * rightj);
-                        robot.Up.setPower(-1 * rightj);
+                        robot.Down.setPower(.7 * rightj);
+                        robot.Up.setPower(-.7 * rightj);
                     }
                     else{
                         robot.Down.setPower(0);
@@ -468,16 +482,16 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                     }
                 }
                 else if (robot.Down.getCurrentPosition() > -500){
-                    robot.Down.setPower(.8 * rightj);
-                    robot.Up.setPower(-.8 *rightj);
-                }
-                else if (robot.Down.getCurrentPosition() < -2000){
-                    robot.Down.setPower(.7 *rightj);
+                    robot.Down.setPower(.7 * rightj);
                     robot.Up.setPower(-.7 *rightj);
                 }
+                else if (robot.Down.getCurrentPosition() < -2000){
+                    robot.Down.setPower(.8 *rightj);
+                    robot.Up.setPower(-.8 *rightj);
+                }
                 else{
-                    robot.Down.setPower(.1 *rightj);
-                    robot.Up.setPower(-1 *rightj);
+                    robot.Down.setPower(.95 *rightj);
+                    robot.Up.setPower(-.95 *rightj);
                 }
             }
             else{
