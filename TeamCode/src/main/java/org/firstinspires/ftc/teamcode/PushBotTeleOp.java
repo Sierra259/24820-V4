@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 @TeleOp(name="PushBotTeleOp")
@@ -35,7 +36,11 @@ public class PushBotTeleOp extends LinearOpMode{
 
         robot.BRD.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        robot.PivotL.setDirection(DcMotorSimple.Direction.FORWARD);
+        robot.PivotL.setDirection(DcMotorSimple.Direction.FORWARD);
 
+        robot.PivotL.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        robot.PivotR.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
 
 
@@ -172,7 +177,8 @@ public class PushBotTeleOp extends LinearOpMode{
 //            telemetry.update();
 //        }
 
-
+        boolean clawOn = false;
+        double clawTime = 0;
         while (opModeIsActive()) {
 
 
@@ -282,11 +288,15 @@ public class PushBotTeleOp extends LinearOpMode{
 //            }
 
 
+//            double FLDp = lefty + leftx;
+//            double FRDp = righty - rightx;
+//            double BLDp = lefty - leftx;
+//            double BRDp = righty + rightx;
+
             double FLDp = lefty + leftx;
             double FRDp = righty - rightx;
             double BLDp = lefty - leftx;
             double BRDp = righty + rightx;
-
 
             // Gamepad 1
             if (isPosBBC) {
@@ -326,13 +336,34 @@ public class PushBotTeleOp extends LinearOpMode{
 //            }
 
             //Soft-Stop for Pivot
-            if (robot.PivotL.getCurrentPosition() < 0 || robot.PivotR.getCurrentPosition() < 0){
-                robot.PivotL.setPower(1);
-                robot.PivotR.setPower(1);
+            if (robot.PivotL.getCurrentPosition() < 0 || robot.PivotR.getCurrentPosition() > 0){
+                robot.PivotL.setPower(0.2);
+                robot.PivotR.setPower(0.2);
             }
-            else if(rightj!=0){
-                robot.PivotL.setPower(.8 * rightj);
-                robot.PivotR.setPower(.8 * rightj);
+            else if(robot.PivotL.getCurrentPosition() < -300 || robot.PivotR.getCurrentPosition() > 300){
+                robot.PivotL.setPower(0.5);
+                robot.PivotR.setPower(0.5);
+            }
+            else if (robot.Down.getCurrentPosition() > -100) {
+
+                if (gamepad1.right_trigger > 0) {
+                    robot.PivotL.setPower(-0.8);
+                    robot.PivotR.setPower(-0.8);
+                } else if (gamepad1.right_bumper) {
+                    robot.PivotL.setPower(0.4);
+                    robot.PivotR.setPower(0.4);
+                } else if (gamepad1.y) {
+                    robot.PivotL.setPower(-0.4);
+                    robot.PivotR.setPower(-0.4);
+                }
+                else{
+                    robot.PivotL.setPower(0);
+                    robot.PivotR.setPower(0);
+                }
+            }
+            else if (robot.PivotL.getCurrentPosition() > 60){
+                robot.PivotL.setPower(-0.1);
+                robot.PivotR.setPower(-0.1);
             }
             else{
                 robot.PivotL.setPower(0);
@@ -346,12 +377,22 @@ public class PushBotTeleOp extends LinearOpMode{
 
 
             }
-            if(gamepad1.right_trigger>0){ // gamepad2test
+            if(gamepad1.x){
+                double newTime = getRuntime() - clawTime;
+
+                if(newTime > 0.2){
+                    clawOn = !clawOn;
+                }
+                clawTime = getRuntime();
+            }
+            if(clawOn){ // gamepad2test
                 robot.Claw.setPosition(0.4);
             }
             else{
                 robot.Claw.setPosition(0.7);
             }
+
+
             if(gamepad1.b) { // gamepad2test
                 robot.RPiv.setPosition(.7);
 //                robot.LPiv.setPosition(.55);
@@ -389,12 +430,24 @@ public class PushBotTeleOp extends LinearOpMode{
 
 
             if(gamepad1.left_bumper){
-                robot.Down.setPower(.5);
-                robot.Up.setPower(-.5);
+                if (robot.Down.getCurrentPosition() > -200){
+                    robot.Down.setPower(.3);
+                    robot.Up.setPower(-.3);
+                }
+                else{
+                    robot.Down.setPower(.7);
+                    robot.Up.setPower(-.7);
+                }
             }
             else if(gamepad1.left_trigger>0){
-                robot.Down.setPower(-.5);
-                robot.Up.setPower(.5);
+                if (robot.Down.getCurrentPosition() < -2000){
+                    robot.Down.setPower(-.3);
+                    robot.Up.setPower(.3);
+                }
+                else{
+                    robot.Down.setPower(-.75);
+                    robot.Up.setPower(.75);
+                }
             }
             else{
                 robot.Down.setPower(0);
@@ -419,6 +472,11 @@ public class PushBotTeleOp extends LinearOpMode{
 //            robot.IN.setPower(intakeSpeed*intakeSpeedMultiplier);
 //            robot.LL.setPower(armSpeed*armPower);
 //            robot.RL.setPower(armSpeed*armPower);
+            telemetry.addData("PL", robot.PivotL.getCurrentPosition());
+            telemetry.addData("PR", robot.PivotR.getCurrentPosition());
+            telemetry.addData("UpLift", robot.Up.getCurrentPosition());
+            telemetry.addData("DownLift", robot.Down.getCurrentPosition());
+            telemetry.addData("ClawTime", clawTime);
             telemetry.update();
 
 

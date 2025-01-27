@@ -61,7 +61,7 @@ public class HardwarePushBot17 {
 
         //arm pivot
         PivotR.setDirection(DcMotorEx.Direction.FORWARD);
-        PivotL.setDirection(DcMotorEx.Direction.REVERSE);
+        PivotL.setDirection(DcMotorEx.Direction.FORWARD);
 
 
 
