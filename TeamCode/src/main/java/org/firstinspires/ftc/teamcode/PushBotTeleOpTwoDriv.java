@@ -176,7 +176,8 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
 //            telemetry.addData("Left Back", robot.DSLB.getDistance(DistanceUnit.INCH));
 //            telemetry.update();
 //        }
-
+        boolean hoverPos = false;
+        double hoverTime = 0;
         boolean clawOn = true;
         double clawTime = 0;
         while (opModeIsActive()) {
@@ -339,26 +340,54 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
 //                robot.Up.setPower(0);
 //            }
 
+            if(gamepad2.a){
+                double newTime = getRuntime() - hoverTime;
 
+                if(newTime > 0.2){
+                    hoverPos = !hoverPos;
+                }
+                hoverTime = getRuntime();
+            }
             // || robot.PivotR.getCurrentPosition() > 40
             // || robot.PivotR.getCurrentPosition() > 320
             //Soft-Stop for Pivot
             //
-            if (robot.PivotL.getCurrentPosition() < -40){
-                robot.PivotL.setPower(
-                        0.2);
+            if (robot.PivotL.getCurrentPosition() < -20){
+                robot.PivotL.setPower(0.2);
                 robot.PivotR.setPower(0.2);
             }
             else if(robot.PivotL.getCurrentPosition() < -320){
                 robot.PivotL.setPower(0.5);
                 robot.PivotR.setPower(0.5);
             }
-            else if (robot.Down.getCurrentPosition() > -1000) {
+            if (hoverPos){
+                if(robot.PivotL.getCurrentPosition() < 500){
+                    robot.PivotL.setPower(0.1);
+                    robot.PivotR.setPower(0.1);
+                }
+                else if (robot.PivotL.getCurrentPosition() > 550){
+                    robot.PivotL.setPower(-0.4);
+                    robot.PivotR.setPower(-0.4);
+                }
+                else{
+                    robot.PivotL.setPower(0);
+                    robot.PivotR.setPower(0);
+                }
+
+            }
+            else if (robot.Down.getCurrentPosition() > -1000 || robot.PivotL.getCurrentPosition() > 300) {
 
                 if(leftj!=0){
                     if(leftj<0) {
-                        robot.PivotL.setPower(.8 * leftj);
-                        robot.PivotR.setPower(.8 * leftj);
+                        if(robot.PivotL.getCurrentPosition() > 300 && robot.Down.getCurrentPosition() < -1000){
+                            robot.PivotL.setPower(.5 * leftj);
+                            robot.PivotR.setPower(.5 * leftj);
+                        }
+                        else{
+                            robot.PivotL.setPower(.8 * leftj);
+                            robot.PivotR.setPower(.8 * leftj);
+                        }
+
                     }
                     else{
                         if(robot.PivotL.getCurrentPosition() > 550){
@@ -377,7 +406,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                     robot.PivotR.setPower(0);
                 }
             }
-            else if (robot.PivotL.getCurrentPosition() > 15){
+            else if (robot.PivotL.getCurrentPosition() > 10){
                 robot.PivotL.setPower(-0.2);
                 robot.PivotR.setPower(-0.2);
             }
@@ -407,6 +436,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                 }
                 clawTime = getRuntime();
             }
+
             if(clawOn){ // gamepad2test
                 robot.Claw.setPosition(0.4);
             }
@@ -471,7 +501,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                         robot.Up.setPower(0);
                     }
                 }
-                else if (robot.Down.getCurrentPosition() < -2650){
+                else if (robot.Down.getCurrentPosition() < -2750){
                     if (rightj > 0) {
                         robot.Down.setPower(.7 * rightj);
                         robot.Up.setPower(-.7 * rightj);
