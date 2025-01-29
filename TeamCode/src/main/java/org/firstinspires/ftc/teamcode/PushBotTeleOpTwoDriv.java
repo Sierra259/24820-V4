@@ -352,26 +352,26 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
             // || robot.PivotR.getCurrentPosition() > 320
             //Soft-Stop for Pivot
             //
-            if (robot.PivotL.getCurrentPosition() < -20){
+            if (robot.PivotL.getCurrentPosition() < -30){
                 robot.PivotL.setPower(0.2);
                 robot.PivotR.setPower(0.2);
             }
             else if(robot.PivotL.getCurrentPosition() < -320){
-                robot.PivotL.setPower(0.5);
-                robot.PivotR.setPower(0.5);
+                robot.PivotL.setPower(0.7);
+                robot.PivotR.setPower(0.7);
             }
-            if (hoverPos){
-                if(robot.PivotL.getCurrentPosition() < 500){
+            else if (hoverPos){
+                if(robot.PivotL.getCurrentPosition() < 400){
                     robot.PivotL.setPower(0.1);
                     robot.PivotR.setPower(0.1);
                 }
-                else if (robot.PivotL.getCurrentPosition() > 550){
-                    robot.PivotL.setPower(-0.4);
-                    robot.PivotR.setPower(-0.4);
+                else if (robot.PivotL.getCurrentPosition() > 450){
+                    robot.PivotL.setPower(-0.5);
+                    robot.PivotR.setPower(-0.5);
                 }
                 else{
-                    robot.PivotL.setPower(0);
-                    robot.PivotR.setPower(0);
+                    robot.PivotL.setPower(-0.2);
+                    robot.PivotR.setPower(-0.2);
                 }
 
             }
@@ -406,7 +406,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                     robot.PivotR.setPower(0);
                 }
             }
-            else if (robot.PivotL.getCurrentPosition() > 10){
+            else if (robot.PivotL.getCurrentPosition() > 0){
                 robot.PivotL.setPower(-0.2);
                 robot.PivotR.setPower(-0.2);
             }
@@ -491,7 +491,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                         robot.Up.setPower(0);
                     }
                 }
-                else if (robot.Down.getCurrentPosition() > -50){
+                else if (robot.Down.getCurrentPosition() > -100){
                     if (rightj < 0) {
                         robot.Down.setPower(.8 * rightj);
                         robot.Up.setPower(-.8 * rightj);
@@ -501,7 +501,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                         robot.Up.setPower(0);
                     }
                 }
-                else if (robot.Down.getCurrentPosition() < -2750){
+                else if (robot.Down.getCurrentPosition() < -2050){
                     if (rightj > 0) {
                         robot.Down.setPower(.7 * rightj);
                         robot.Up.setPower(-.7 * rightj);
@@ -512,12 +512,206 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                     }
                 }
                 else if (robot.Down.getCurrentPosition() > -500){
-                    robot.Down.setPower(.7 * rightj);
-                    robot.Up.setPower(-.7 *rightj);
+                    if (rightj < 0) {
+                        robot.Down.setPower(.8 * rightj);
+                        robot.Up.setPower(-.8 * rightj);
+                    }
+                    else{
+                        robot.Down.setPower(.3 * rightj);
+                        robot.Up.setPower(-.3 * rightj);
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 }
-                else if (robot.Down.getCurrentPosition() < -2000){
-                    robot.Down.setPower(.8 *rightj);
-                    robot.Up.setPower(-.8 *rightj);
+                else if (robot.Down.getCurrentPosition() < -1800){
+                    if (rightj > 0) {
+                        robot.Down.setPower(.9 * rightj);
+                        robot.Up.setPower(-.9 * rightj);
+                    }
+                    else{
+                        robot.Down.setPower(.4 * rightj);
+                        robot.Up.setPower(-.4 * rightj);
+                    }
                 }
                 else{
                     robot.Down.setPower(.95 *rightj);
