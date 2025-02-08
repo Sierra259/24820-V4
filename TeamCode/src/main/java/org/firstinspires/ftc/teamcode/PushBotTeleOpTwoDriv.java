@@ -284,24 +284,25 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
 //            }
 
 
-            if(gamepad2.right_bumper){
-                speed = .5;
+            if(gamepad1.right_bumper){
+                speed = .3;
             }
             else{
                 speed = .8;
             }
 
-
-
-//            double FLDp = lefty + leftx;
-//            double FRDp = righty - rightx;
-//            double BLDp = lefty - leftx;
-//            double BRDp = righty + rightx;
+            if(gamepad1.left_bumper){
+                lefty = -lefty;
+                righty = -righty;
+            }
 
             double FLDp = lefty + leftx;
             double FRDp = righty - rightx;
             double BLDp = lefty - leftx;
             double BRDp = righty + rightx;
+
+
+
 
             // Gamepad 1
             if (isPosBBC) {
@@ -361,13 +362,13 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                 robot.PivotR.setPower(0.7);
             }
             else if (hoverPos){
-                if(robot.PivotL.getCurrentPosition() < 400){
+                if(robot.PivotL.getCurrentPosition() < 430){
                     robot.PivotL.setPower(0.1);
                     robot.PivotR.setPower(0.1);
                 }
-                else if (robot.PivotL.getCurrentPosition() > 450){
-                    robot.PivotL.setPower(-0.5);
-                    robot.PivotR.setPower(-0.5);
+                else if (robot.PivotL.getCurrentPosition() > 480){
+                    robot.PivotL.setPower(-0.6);
+                    robot.PivotR.setPower(-0.6);
                 }
                 else{
                     robot.PivotL.setPower(-0.2);
@@ -438,7 +439,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
             }
 
             if(clawOn){ // gamepad2test
-                robot.Claw.setPosition(0.4);
+                robot.Claw.setPosition(0.3);
             }
             else{
                 robot.Claw.setPosition(0.7);
@@ -481,7 +482,52 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
 
 
             if(rightj!=0){
-                if (robot.Down.getCurrentPosition() < -1500 && robot.PivotL.getCurrentPosition() > 300){
+
+//                else if (robot.Down.getCurrentPosition() > -100){
+//                    if (rightj < 0) {
+//                        robot.Down.setPower(.8 * rightj);
+//                        robot.Up.setPower(-.8 * rightj);
+//                    }
+//                    else{
+//                        robot.Down.setPower(.3 * rightj);
+//                        robot.Up.setPower(-.3 * rightj);
+//                    }
+//                }
+//                else if (robot.Down.getCurrentPosition() < -2200){
+//                    if (rightj > 0) {
+//                        robot.Down.setPower(1 * rightj);
+//                        robot.Up.setPower(-1 * rightj);
+//                    }
+//                    else{
+//                        robot.Down.setPower(0);
+//                        robot.Up.setPower(0);
+//                    }
+//                }
+//                else if (robot.Down.getCurrentPosition() > -500){
+//                    if (rightj < 0) {
+//                        robot.Down.setPower(.8 * rightj);
+//                        robot.Up.setPower(-.8 * rightj);
+//                    }
+//                    else{
+//                        robot.Down.setPower(1 * rightj);
+//                        robot.Up.setPower(-1 * rightj);
+//                    }
+//                }
+//                else if (robot.Down.getCurrentPosition() < -1800){
+//                    if (rightj > 0) {
+//                        robot.Down.setPower(1 * rightj);
+//                        robot.Up.setPower(-1 * rightj);
+//                    }
+//                    else{
+//                        robot.Down.setPower(.7 * rightj);
+//                        robot.Up.setPower(-.7 * rightj);
+//                    }
+//                }
+//                else{
+//                    robot.Down.setPower(1 *rightj);
+//                    robot.Up.setPower(-1 *rightj);
+//                }
+                if (robot.Down.getCurrentPosition() < -1800 && robot.PivotL.getCurrentPosition() > 300){
                     if (rightj > 0) {
                         robot.Down.setPower(.8 * rightj);
                         robot.Up.setPower(-.8 * rightj);
@@ -489,234 +535,13 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
                     else{
                         robot.Down.setPower(0);
                         robot.Up.setPower(0);
-                    }
-                }
-                else if (robot.Down.getCurrentPosition() > -100){
-                    if (rightj < 0) {
-                        robot.Down.setPower(.8 * rightj);
-                        robot.Up.setPower(-.8 * rightj);
-                    }
-                    else{
-                        robot.Down.setPower(0);
-                        robot.Up.setPower(0);
-                    }
-                }
-                else if (robot.Down.getCurrentPosition() < -2050){
-                    if (rightj > 0) {
-                        robot.Down.setPower(.7 * rightj);
-                        robot.Up.setPower(-.7 * rightj);
-                    }
-                    else{
-                        robot.Down.setPower(0);
-                        robot.Up.setPower(0);
-                    }
-                }
-                else if (robot.Down.getCurrentPosition() > -500){
-                    if (rightj < 0) {
-                        robot.Down.setPower(.8 * rightj);
-                        robot.Up.setPower(-.8 * rightj);
-                    }
-                    else{
-                        robot.Down.setPower(.3 * rightj);
-                        robot.Up.setPower(-.3 * rightj);
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                }
-                else if (robot.Down.getCurrentPosition() < -1800){
-                    if (rightj > 0) {
-                        robot.Down.setPower(.9 * rightj);
-                        robot.Up.setPower(-.9 * rightj);
-                    }
-                    else{
-                        robot.Down.setPower(.4 * rightj);
-                        robot.Up.setPower(-.4 * rightj);
                     }
                 }
                 else{
-                    robot.Down.setPower(.95 *rightj);
-                    robot.Up.setPower(-.95 *rightj);
+                    robot.Down.setPower(1 *rightj);
+                    robot.Up.setPower(-1 *rightj);
                 }
+
             }
             else{
                 robot.Down.setPower(0);
