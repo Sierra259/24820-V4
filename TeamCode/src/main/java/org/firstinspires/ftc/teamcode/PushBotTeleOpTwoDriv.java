@@ -363,12 +363,16 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
             }
             else if (hoverPos){
                 if(robot.PivotL.getCurrentPosition() < 430){
-                    robot.PivotL.setPower(0.1);
-                    robot.PivotR.setPower(0.1);
+                    robot.PivotL.setPower(0.2);
+                    robot.PivotR.setPower(0.2);
                 }
                 else if (robot.PivotL.getCurrentPosition() > 480){
                     robot.PivotL.setPower(-0.6);
                     robot.PivotR.setPower(-0.6);
+                }
+                else if (robot.PivotL.getCurrentPosition() > 500){
+                    robot.PivotL.setPower(-0.85);
+                    robot.PivotR.setPower(-0.85);
                 }
                 else{
                     robot.PivotL.setPower(-0.2);
@@ -527,7 +531,7 @@ public class PushBotTeleOpTwoDriv extends LinearOpMode{
 //                    robot.Down.setPower(1 *rightj);
 //                    robot.Up.setPower(-1 *rightj);
 //                }
-                if (robot.Down.getCurrentPosition() < -1800 && robot.PivotL.getCurrentPosition() > 300){
+                if (robot.Down.getCurrentPosition() < -1500 && robot.PivotL.getCurrentPosition() > 400){
                     if (rightj > 0) {
                         robot.Down.setPower(.8 * rightj);
                         robot.Up.setPower(-.8 * rightj);

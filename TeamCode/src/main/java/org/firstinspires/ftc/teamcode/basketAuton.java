@@ -5,46 +5,37 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-//tells the robot where to go on the mat in relation to a plane (x & y) heading
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.Trajectory;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TrajectoryBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
-//tells the robot where to go on the mat in relation to a plane (x & y) w/o a heading
 import com.acmerobotics.roadrunner.ftc.Actions;
-//import com.arcrobotics.ftclib.command.ParallelRaceGroup;
-import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.teamcode.MecanumDrive;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-
-
 @Config
-@Autonomous(name="Specimen Auton", group="Autonomous")
+@Autonomous(name="Basket Auton", group="Autonomous")
 
-public class shayanAuton extends LinearOpMode {
-    private static final Logger log = LoggerFactory.getLogger(shayanAuton.class);
-    private boolean isUp = true;
-    private boolean isDown = false;
-    private boolean isHover = false;
-    private boolean armInUse = true;
+public class basketAuton extends LinearOpMode {
+    private static final Logger log = LoggerFactory.getLogger(basketAuton.class);
+    public static boolean isUp = true;
+    public static boolean isDown = false;
+    public static boolean isHover = false;
+    public static boolean armInUse = true;
     public class basket {
+        public boolean isUp = true;
+        public boolean isDown = false;
+        public boolean isHover = false;
+        public boolean armInUse = true;
         public Servo LPiv;
         public Servo RPiv;
         public Servo Twist;
@@ -86,25 +77,66 @@ public class shayanAuton extends LinearOpMode {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 while(Down.getCurrentPosition() > -2200){
-                    Down.setPower(.85);
-                    Up.setPower(-.85);
+                    Down.setPower(-.85);
+                    Up.setPower(.85);
+//                    if (PivotL.getCurrentPosition() < -30) {
+//                        PivotL.setPower(0.2);
+//                        PivotR.setPower(0.2);
+//                    } else if (PivotL.getCurrentPosition() < -320) {
+//                        PivotL.setPower(0.7);
+//                        PivotR.setPower(0.7);
+//                    }
+//                    else if (PivotL.getCurrentPosition() > 0){
+//                        PivotL.setPower(-0.2);
+//                        PivotR.setPower(-0.2);
+//                    }
+//                    else {
+//                        PivotL.setPower(0);
+//                        PivotR.setPower(0);
+//                    }
+
                 }
+//                PivotL.setPower(0);
+//                PivotR.setPower(0);
                 Down.setPower(0);
                 Up.setPower(0);
                 return false;
             }
         }
+        public Action liftUp(){
+            return new basket.liftUp();
+        }
         public class liftDown implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 while(Down.getCurrentPosition() <-100){
-                    Down.setPower(-.8);
-                    Up.setPower(.8);
+                    Down.setPower(.8);
+                    Up.setPower(-.8);
+//                    if (PivotL.getCurrentPosition() < -30) {
+//                        PivotL.setPower(0.2);
+//                        PivotR.setPower(0.2);
+//                    } else if (PivotL.getCurrentPosition() < -320) {
+//                        PivotL.setPower(0.7);
+//                        PivotR.setPower(0.7);
+//                    }
+//                    else if (PivotL.getCurrentPosition() > 0){
+//                        PivotL.setPower(-0.2);
+//                        PivotR.setPower(-0.2);
+//                    }
+//                    else {
+//                        PivotL.setPower(0);
+//                        PivotR.setPower(0);
+//                    }
                 }
+//                PivotL.setPower(0);
+//                PivotR.setPower(0);
                 Down.setPower(0);
                 Up.setPower(0);
                 return false;
             }
+        }
+        public Action liftDown(){
+            return new basket.liftDown();
         }
         public class Pivot implements Action {
             @Override
@@ -117,6 +149,10 @@ public class shayanAuton extends LinearOpMode {
                         } else if (PivotL.getCurrentPosition() < -320) {
                             PivotL.setPower(0.7);
                             PivotR.setPower(0.7);
+                        }
+                        else if (PivotL.getCurrentPosition() > 0){
+                            PivotL.setPower(-0.2);
+                            PivotR.setPower(-0.2);
                         }
                         else {
                             PivotL.setPower(0);
@@ -155,6 +191,9 @@ public class shayanAuton extends LinearOpMode {
                 return false;
             }
         }
+        public Action Pivot(){
+            return new basket.Pivot();
+        }
         public class intake implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -162,13 +201,43 @@ public class shayanAuton extends LinearOpMode {
                 return false;
             }
         }
-        public class drop implements Action{
+        public Action intake(){
+            return new basket.intake();
+        }
+
+        public class midtake implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                RPiv.setPosition(.75);
+                RPiv.setPosition(.6);
                 return false;
             }
         }
+        public Action midtake(){
+            return new basket.midtake();
+        }
+
+        public class drop implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                RPiv.setPosition(.8);
+                return false;
+            }
+        }
+        public Action drop(){
+            return new basket.drop();
+        }
+
+        public class Twist implements Action{
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                Twist.setPosition(.35);
+                return false;
+            }
+        }
+        public Action Twist(){
+            return new basket.Twist();
+        }
+
         public class ClawTight implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
@@ -176,12 +245,18 @@ public class shayanAuton extends LinearOpMode {
                 return false;
             }
         }
+        public Action ClawTight(){
+            return new basket.ClawTight();
+        }
         public class ClawLoose implements Action{
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 Claw.setPosition(.7);
                 return false;
             }
+        }
+        public Action ClawLoose(){
+            return new basket.ClawLoose();
         }
 
     }
@@ -470,14 +545,17 @@ public class shayanAuton extends LinearOpMode {
 //    }
     @Override
     public void runOpMode() {
-        Pose2d beginPose = new Pose2d(10, -60, Math.toRadians(90));
+        Pose2d beginPose = new Pose2d(-10, -60, Math.toRadians(0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, beginPose);
+        basket basket = new basket(hardwareMap);
 //        intake intake = new intake(hardwareMap);
 //        outtake outtake = new outtake(hardwareMap);
 //        lift lift = new lift(hardwareMap);
 
         TrajectoryActionBuilder park = drive.actionBuilder(beginPose)
-                .strafeTo(new Vector2d(60, -60));
+                .strafeToLinearHeading(new Vector2d(-46, -45), Math.toRadians(40));
+//        TrajectoryActionBuilder Sample1 = drive.actionBuilder(beginPose)
+//                .strafeToLinearHeading(new Vector2d(10, -30), Math.toRadians(90));
 //        TrajectoryActionBuilder traj1 = drive.actionBuilder(beginPose)
 //                .lineToY(-21);
 //        TrajectoryActionBuilder up1 = drive.actionBuilder(new Pose2d(-5,-40,Math.toRadians(90))).lineToY(-24)
@@ -522,9 +600,34 @@ public class shayanAuton extends LinearOpMode {
 //                intake.transfer(),
 //                lift.reset())
 //        );
+        Actions.runBlocking(basket.ClawTight());
+
         waitForStart();
         if (isStopRequested()) return;
-        Actions.runBlocking(park.build());
+        Actions.runBlocking(
+                new SequentialAction(
+                        basket.midtake(),
+                        park.build(),
+                        new SequentialAction(
+                                        basket.Twist(),
+                                        basket.intake(),
+                                        basket.liftUp(),
+                                        new SequentialAction(
+                                                basket.drop(),
+                                                new SleepAction(0.5),
+                                                basket.ClawLoose(),
+                                                new SleepAction(0.3),
+                                                basket.intake(),
+                                                new SleepAction(0.5),
+                                                basket.liftDown()
+                                        )
+                        )
+
+
+
+                )
+
+        );
     }
 }
 
